@@ -74,6 +74,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new ExtractTextPlugin({
+      filename: "[name].css",
+      allChunks: true,
+    }),
+
   ]
 }
