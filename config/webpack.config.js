@@ -2,24 +2,29 @@ const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 const pkg = require('../package.json')
 const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const devMode = process.env.NODE_ENV !== 'production'
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
+const TerserJSPlugin = require("terser-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const ROOT_PATH = path.resolve(__dirname, '..')
+
 function resolve(dir) {
   return path.join(ROOT_PATH, dir)
 }
 
-module.exports = {
-  mode: process.env.NODE_ENV || 'development',
+let config =  {
+  mode: process.env.NODE_ENV,
   target: 'web',
   entry: {
     main: resolve('src/main.js')
   },
   output: {
     path: resolve('public/'),
-    filename: '[name].js',
-    publicPath: '/',
+    filename: !devMode ? '[name].[chunkhash].js' : '[name].js',
+    publicPath: 'public/',
   },
   resolve: {
     extensions: ['.js', '.json', '.vue'],
@@ -29,33 +34,34 @@ module.exports = {
     }
   },
   watchOptions: {
-    ignored: ['node_modules']
+    ignored: ['node_modules'],
+    aggregateTimeout: 600
   },
   module: {
     rules: [
       {
         test: /\.(css|less)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader'
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: [
-                  autoprefixer({
-                    browsers: pkg.browserslist
-                  })
-                ]
-              }
-            },
-            {
-              loader: 'less-loader'
+        use: [
+          {
+            loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                autoprefixer({
+                  browsers: pkg.browserslist
+                })
+              ]
             }
-          ]
-        })
+          },
+          {
+            loader: 'less-loader'
+          }
+        ]
       },
       {
         test: /\.js$/,
@@ -68,17 +74,32 @@ module.exports = {
         }
       },
       {
-         test:/\.vue$/,
-         loader:'vue-loader'
+        test: /\.vue$/,
+        loader: 'vue-loader'
       },
     ]
   },
   plugins: [
     new VueLoaderPlugin(),
-    new ExtractTextPlugin({
-      filename: "[name].css",
+    new MiniCssExtractPlugin({
+      filename: !devMode ? "[name].[contenthash].css" : "[name].css",
       allChunks: true,
     }),
-
+    new HtmlWebpackPlugin({
+      filename:　resolve('./index.html'),
+      template: resolve('./base.html'),
+      minify: false
+    })
   ]
 }
+
+if(!devMode) {
+  config.optimization = {
+    minimizer: [
+      new TerserJSPlugin({}),
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  }
+}
+
+module.exports = config

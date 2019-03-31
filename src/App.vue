@@ -4,15 +4,15 @@
             BROCCOLI & CO
         </div>
         <div class="content">
-            <Popup></Popup>
+            <Popup v-if="isShowPopup" v-on:closeAllBox="close"></Popup>
             <div class="slogan">
                 <h1>A better way</h1>
                 <h1>to enjoy every day.</h1>
                 <h6>Be the first to know when wo launch</h6>
             </div>
-            <div class="invite-button">
+            <button class="invite-button" @click="showPopup">
                 Request an invite
-            </div>
+            </button>
         </div>
         <div class="footer">
             <h6>made with ❤ in Shanghai</h6>
@@ -27,6 +27,19 @@
     name: 'App',
     components: {
       Popup
+    },
+    data() {
+      return {
+        isShowPopup: false
+      }
+    },
+    methods: {
+      showPopup: function () {
+        this.isShowPopup = !this.isShowPopup
+      },
+      close: function () {
+        this.isShowPopup = false
+      }
     }
   }
 </script>
@@ -71,6 +84,7 @@
                 padding: 10px;
                 text-align: center;
                 margin-top: 20px;
+                background: white;
             }
         }
         .footer {
