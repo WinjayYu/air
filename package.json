@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack --watch --config config/webpack.config.js",
     "build": "cross-env NODE_ENV=production webpack  --config config/webpack.config.js",
-    "test": "cross-env NODE_ENV=development mocha-webpack --webpack-config config/webpack.config.js --require test/setup.js test/**/*.spec.js"
+    "test": "cross-env NODE_ENV=test mocha-webpack --webpack-config config/webpack.config.js --require test/setup.js test/**/*.spec.js"
   },
   "author": "winjayyu",
   "license": "ISC",
@@ -36,7 +36,8 @@
     "vue-loader": "^15.7.0",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
+    "webpack-cli": "^3.3.0",
+    "webpack-node-externals": "^1.7.2"
   },
   "browserlists": [
     ">1%",

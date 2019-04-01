@@ -8,7 +8,7 @@ const devMode = process.env.NODE_ENV !== 'production'
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 const TerserJSPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+const mode = process.env.NODE_ENV === 'test' ? 'production' : process.env.NODE_ENV
 const ROOT_PATH = path.resolve(__dirname, '..')
 
 function resolve(dir) {
@@ -16,7 +16,7 @@ function resolve(dir) {
 }
 
 let config =  {
-  mode: process.env.NODE_ENV,
+  mode,
   target: 'web',
   entry: {
     main: resolve('src/main.js')
@@ -100,6 +100,11 @@ if(!devMode) {
       new OptimizeCSSAssetsPlugin({})
     ]
   }
+}
+
+if (process.env.NODE_ENV === 'test') {
+  config.externals = [require('webpack-node-externals')()]
+  config.devtool = 'inline-cheap-module-source-map'
 }
 
 module.exports = config

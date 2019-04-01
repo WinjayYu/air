@@ -66,6 +66,7 @@
 <script>
   const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const serverUrl = 'https://l94wc2001h.execute-api.ap-southeast-2.amazonaws.com/prod/fake-auth'
+  import warnMsg from '../lib/warn-msg'
   export default {
     name: 'Popup',
     props: {
@@ -98,13 +99,13 @@
         }
         this.errorMessage = null
         if (!this.name || this.name.length < 3) {
-          this.errors.name = "姓名最少需要3个字符"
+          this.errors.name = warnMsg.name
         }
         if (!emailReg.test(this.email)) {
-          this.errors.email = "邮箱格式不合法"
+          this.errors.email = warnMsg.email
         }
         if (this.email !== this.confirmEmail) {
-          this.errors.confirmEmail = "邮箱两次输入不一致"
+          this.errors.confirmEmail = warnMsg.confirmEmail
         }
         if (Object.values(this.errors).filter(item => item).length === 0) {
           return true
@@ -137,9 +138,9 @@
           .catch(error => {
             console.error('Error:', error.message)
             try {
-              this.errorMessage = JSON.parse(error.message).errorMessage || "出错了,稍后再试！"
+              this.errorMessage = JSON.parse(error.message).errorMessage || warnMsg.serverDefaultError
             } catch (e) {
-              this.errorMessage = error.message || "出错了,稍后再试！"
+              this.errorMessage = error.message || warnMsg.serverDefaultError
             }
             this.sendValue = "Send"
           })
