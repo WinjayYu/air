@@ -1,4 +1,4 @@
-import {shallowMount, mount} from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import warnMsg from '../src/lib/warn-msg'
 import App from '../src/App'
 import Popup from '../src/components/Popup'
@@ -13,7 +13,7 @@ describe('App.vue', () => {
 
 describe('Popup.vue', () => {
   it('renders an error when full name characters long is least 3', () => {
-    const wrapper = mount(Popup)
+    const wrapper = shallowMount(Popup)
     wrapper.setData({
       name: 'Hi',
       email: 'hello@gmail.com',
@@ -26,7 +26,7 @@ describe('Popup.vue', () => {
 
 describe('Popup.vue', () => {
   it('renders an error when email format is wrong', () => {
-    const wrapper = mount(Popup)
+    const wrapper = shallowMount(Popup)
     wrapper.setData({
       name: 'foo',
       email: 'hello',
@@ -39,7 +39,7 @@ describe('Popup.vue', () => {
 
 describe('Popup.vue', () => {
   it('renders an error when the emails entered are not the same', () => {
-    const wrapper = mount(Popup)
+    const wrapper = shallowMount(Popup)
     wrapper.setData({
       name: 'foo',
       email: 'hello@gmail.com',
@@ -50,19 +50,3 @@ describe('Popup.vue', () => {
   })
 })
 
-describe('Popup.vue', () => {
-
-  it('renders an error when the front-end app trigger a specific error to server', (done) => {
-    const wrapper = mount(Popup)
-    wrapper.setData({
-      name: 'foo',
-      email: 'usedemail@airwallex.com',
-      confirmEmail: 'usedemail@airwallex.com'
-    })
-    wrapper.find('input[type="submit"]').trigger('submit')
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.contains('.error-message'))
-      done()
-    })
-  })
-})

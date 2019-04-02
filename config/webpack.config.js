@@ -1,11 +1,10 @@
-const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 const pkg = require('../package.json')
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const devMode = process.env.NODE_ENV !== 'production'
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserJSPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const mode = process.env.NODE_ENV === 'test' ? 'production' : process.env.NODE_ENV
@@ -29,8 +28,7 @@ let config =  {
   resolve: {
     extensions: ['.js', '.json', '.vue'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      'vue$': 'vue/dist/vue.esm.js'
     }
   },
   watchOptions: {
@@ -82,7 +80,7 @@ let config =  {
   plugins: [
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
-      filename: !devMode ? "[name].[contenthash].css" : "[name].css",
+      filename: !devMode ? '[name].[contenthash].css' : '[name].css',
       allChunks: true,
     }),
     new HtmlWebpackPlugin({

@@ -44,8 +44,8 @@
   }
 </script>
 
-<style lang='less'>
-    @import "variables";
+<style lang="less">
+    @import "./lib/variables";
 
     * {
         margin: 0;

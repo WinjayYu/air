@@ -117,7 +117,7 @@
         if (!this.checkForm()) {
           return false
         }
-        this.sendValue = "Sending, please wait..."
+        this.sendValue = 'Sending, please wait...'
         const requestData = JSON.stringify({"name": this.name, "email": this.email})
         window.fetch(serverUrl, {
           method: 'POST',
@@ -130,7 +130,7 @@
           .then(response => {
             if (response.ok) {
               this.isShowInviteBox = false
-              this.sendValue = "Send"
+              this.sendValue = 'Send'
             } else {
               throw new Error(JSON.stringify(response.json))
             }
@@ -142,7 +142,7 @@
             } catch (e) {
               this.errorMessage = error.message || warnMsg.serverDefaultError
             }
-            this.sendValue = "Send"
+            this.sendValue = 'Send'
           })
       },
       parseJSON(response) {
@@ -156,26 +156,26 @@
       changeHandler(e) {
         this.errorMessage = null
         switch (e.target.id) {
-          case "name":
+          case 'name':
             this.errors.name = null
             break
-          case "email":
+          case 'email':
             this.errors.email = null
             break
-          case "confirmEmail":
+          case 'confirmEmail':
             this.errors.confirmEmail = null
             break
         }
       },
       closeBox() {
-        this.$emit("closeAllBox")
+        this.$emit('closeAllBox')
       }
     }
   }
 </script>
 
 <style scoped lang="less">
-    @import "../variables";
+    @import "../lib/variables";
 
     .pop-up {
         position: absolute;
