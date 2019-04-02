@@ -4,46 +4,46 @@
             <p class="title">Request an invite</p>
             <div class="cut-of-rule"></div>
             <form
-                    id="inviteForm"
-                    action="https://vuejs.org/"
-                    method="post"
-                    novalidate="true"
-                    @submit.prevent="submit"
+                id="inviteForm"
+                action="https://vuejs.org/"
+                method="post"
+                novalidate="true"
+                @submit.prevent="submit"
             >
                 <div class="input-group">
                     <div class="input-item">
                         <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                placeholder="Full name"
-                                v-model="name"
-                                :class="{ danger: errors.name }"
-                                @focus="changeHandler"
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Full name"
+                            v-model="name"
+                            :class="{ danger: errors.name }"
+                            @focus="changeHandler"
                         >
                         <div class="warning" v-if="errors.name">{{errors.name}}</div>
                     </div>
                     <div class="input-item">
                         <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Email"
-                                v-model="email"
-                                :class="{ danger: errors.email }"
-                                @focus="changeHandler"
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Email"
+                            v-model="email"
+                            :class="{ danger: errors.email }"
+                            @focus="changeHandler"
                         >
                         <div class="warning" v-if="errors.email">{{errors.email}}</div>
                     </div>
                     <div class="input-item">
                         <input
-                                type="text"
-                                id="confirmEmail"
-                                name="confirmEmail"
-                                placeholder="Confirm email"
-                                v-model="confirmEmail"
-                                :class="{ danger: errors.confirmEmail }"
-                                @focus="changeHandler"
+                            type="text"
+                            id="confirmEmail"
+                            name="confirmEmail"
+                            placeholder="Confirm email"
+                            v-model="confirmEmail"
+                            :class="{ danger: errors.confirmEmail }"
+                            @focus="changeHandler"
                         >
                         <div class="warning" v-if="errors.confirmEmail">{{errors.confirmEmail}}</div>
                     </div>
